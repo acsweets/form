@@ -115,16 +115,12 @@ class FormDecoder {
       widget = _convertToWidget(baseComposesModel);
     } else {
       widget = const WarningWidget(
-        message: "jSON数据读取失败",
+        message: "JSON数据读取失败",
       );
     }
     return widget;
   }
 
-  /// 表单组件怎么拿到和管理子组件的状态？
-  /// 表单中怎么知道需要提交哪些字段，提交时遍历 表单组件的key 获得要提交的的参数信息
-  /// 从树里找到这些信息
-  /// 获得表单的状态，组件改变（回调出去在表单里做处理）去调用表单里的方法
   Widget _convertToWidget(BaseComposesModel component) {
     switch (component.composeType) {
       case ComposeType.form:

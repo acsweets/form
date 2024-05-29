@@ -30,9 +30,6 @@ Widget _createWidgetFromJson(Map<String, dynamic>? jsonData) {
 final Map<String, Widget> composes = {
   // 'text': const TextWidget(),
   "textArea": const TextAreaWidget(), //描述输入
-  "line": const LineWidget(), // 线
-  "pager": const PagerWidget(), //
-  "title": const TitleWidget(), //输入标题组件
   "selectBox": const SelectBoxWidget(), //选择框
   "checkBox": const CheckBoxWidget(), //
   "switch": const SwitchWidget(), //开关
