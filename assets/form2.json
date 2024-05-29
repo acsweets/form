@@ -1,0 +1,621 @@
+{
+  "type": "form",
+  "disable": false,
+  "hidden": false,
+  "editMode": true,
+  "id": "form-6438d56f3cc663e6bd0d93eb",
+  "state": "default",
+  "group": "",
+  "children": [
+    {
+      "id": "text-6438e987a9b9c32ae50d93ec",
+      "order": 0,
+      "type": "text",
+      "editMode": true,
+      "label": "姓名",
+      "placeholder": "请输入姓名",
+      "key": "name",
+      "defaultValue": "",
+      "required": false,
+      "requiredMessage": "请输入姓名",
+      "disabled": false,
+      "hidden": false,
+      "group": "",
+      "state": "default",
+      "clearable": false,
+      "style": {
+        "width": "100%",
+        "height": "35px",
+        "color": "111",
+        "styleMode": "floating"
+      },
+      "events": [],
+      "reg": false,
+      "regPattern": "",
+      "regMessage": "",
+      "mode": "text",
+      "valueChangeEvent": "blur",
+      "count": 0,
+      "min": 0,
+      "max": 0,
+      "isShowComponent": true,
+      "alisa": "name",
+      "value": "张三"
+    },
+    {
+      "id": "",
+      "order": 0,
+      "type": "text",
+      "editMode": true,
+      "label": "数字输入框",
+      "placeholder": "请输入值",
+      "key": "",
+      "defaultValue": "",
+      "required": false,
+      "requiredMessage": "必填项",
+      "disabled": false,
+      "hidden": false,
+      "group": "",
+      "state": "default",
+      "cleanable": false,
+      "style": {
+        "width": "100%",
+        "height": "35px",
+        "color": "",
+        "styleMode": "floating"
+      },
+      "events": [],
+      "reg": false,
+      "regPattern": "",
+      "regMessage": "",
+      "mode": "number",
+      "valueChangeEvent": "blur",
+      "count": 0,
+      "min": 0,
+      "max": 0,
+      "isShowComponent": true,
+      "alisa": "age"
+    },
+    {
+      "id": "textArea-6438ed98be96796be80d941e",
+      "order": 2,
+      "type": "textArea",
+      "editMode": true,
+      "label": "个人介绍",
+      "placeholder": "请输入个人简介",
+      "key": "demo",
+      "defaultValue": "",
+      "required": false,
+      "requiredMessage": "必填项",
+      "disabled": false,
+      "hidden": false,
+      "group": "",
+      "state": "default",
+      "clearable": false,
+      "style": {
+        "height": "64px",
+        "width": "100%",
+        "color": ""
+      },
+      "events": [],
+      "reg": false,
+      "regPattern": "",
+      "regMessage": "",
+      "resizable": true,
+      "alisa": "demo"
+    },
+    {
+      "type": "line",
+      "id": "line-6438e9eb06847e9b060d9408",
+      "state": "default",
+      "editMode": true,
+      "style": {
+        "width": "100%"
+      },
+      "order": 3,
+      "events": []
+    },
+    {
+      "type": "pager",
+      "id": "pager-6438e9ee88548438670d9409",
+      "state": "default",
+      "editMode": true,
+      "style": {
+        "width": "100%"
+      },
+      "order": 4,
+      "events": []
+    },
+    {
+      "id": "title-6438ea079f7fa164770d940a",
+      "order": 5,
+      "type": "title",
+      "editMode": true,
+      "label": "职业信息",
+      "placeholder": "描述你的职业信息",
+      "key": "",
+      "defaultValue": "",
+      "required": false,
+      "requiredMessage": "必填项",
+      "disabled": false,
+      "hidden": false,
+      "group": "",
+      "state": "default",
+      "clearable": false,
+      "style": {
+        "width": "100%",
+        "height": "35px",
+        "color": "",
+        "styleMode": "floating"
+      },
+      "events": [],
+      "reg": false,
+      "regPattern": "",
+      "regMessage": "",
+      "button": null
+    },
+    {
+      "id": "selectBox-6438ea28b4da8ff0ba0d940c",
+      "order": 6,
+      "type": "selectBox",
+      "editMode": true,
+      "label": "职业",
+      "placeholder": "请选择职业",
+      "key": "role",
+      "defaultValue": "",
+      "required": false,
+      "requiredMessage": "请选择职业",
+      "disabled": false,
+      "hidden": false,
+      "group": "",
+      "state": "default",
+      "clearable": false,
+      "style": {
+        "width": "100%",
+        "height": "35px",
+        "color": "",
+        "styleMode": "floating"
+      },
+      "events": [],
+      "reg": false,
+      "regPattern": "",
+      "regMessage": "",
+      "mode": "single",
+      "dataSource": [
+        "custom"
+      ],
+      "displayExpr": "",
+      "valueExpr": "",
+      "treeConfig": {
+        "showCheckBoxesMode": "none",
+        "selectionMode": "",
+        "selectByClick": true,
+        "disabled": true,
+        "displayExpr": "",
+        "keyExpr": "",
+        "parentIdExpr": "parentId",
+        "itemsExpr": "children",
+        "searchValue": "",
+        "searchExpr": ""
+      },
+      "alisa": "role",
+      "customDataSource": [
+        {
+          "id": "fashi",
+          "name": "法师",
+          "seq": 0
+        },
+        {
+          "id": "cike",
+          "name": "刺客",
+          "seq": 65533
+        }
+      ]
+    },
+    {
+      "id": "checkBox-6438ea2a8d8f92bdc10d940f",
+      "order": 7,
+      "type": "checkBox",
+      "editMode": true,
+      "label": "擅长方向",
+      "placeholder": "擅长方向",
+      "key": "like",
+      "defaultValue": "",
+      "required": false,
+      "requiredMessage": "必选项",
+      "disabled": false,
+      "hidden": false,
+      "group": "",
+      "state": "default",
+      "clearable": false,
+      "style": {
+        "width": "100%",
+        "height": "35px",
+        "color": "",
+        "styleMode": "floating"
+      },
+      "events": [],
+      "reg": false,
+      "regPattern": "",
+      "regMessage": "",
+      "dataSource": [
+        {
+          "id": 1,
+          "name": "选型一",
+          "selected": false
+        },
+        {
+          "id": 2,
+          "name": "选项二",
+          "selected": false
+        }
+      ],
+      "displayExpr": "name",
+      "valueExpr": "id",
+      "align": "left",
+      "alisa": "like"
+    },
+    {
+      "id": "switch-6438ea2b731644cc4d0d9412",
+      "order": 8,
+      "type": "switch",
+      "editMode": true,
+      "label": "狂暴",
+      "placeholder": "是否能开启狂暴",
+      "key": "kuangbao",
+      "defaultValue": "",
+      "required": false,
+      "requiredMessage": "必选项",
+      "disabled": false,
+      "hidden": false,
+      "group": "",
+      "state": "default",
+      "clearable": false,
+      "style": {
+        "width": "100%",
+        "height": "35px",
+        "color": "",
+        "styleMode": "floating"
+      },
+      "events": [],
+      "reg": false,
+      "regPattern": "",
+      "regMessage": "",
+      "align": "left",
+      "convertTrue": "true",
+      "convertFalse": "false",
+      "alisa": "kuangbao"
+    },
+    {
+      "id": "date-6438ea2baa935308ff0d9415",
+      "order": 9,
+      "type": "date",
+      "editMode": true,
+      "label": "创建日期",
+      "placeholder": "请输入创建日期",
+      "key": "birth",
+      "defaultValue": "",
+      "required": false,
+      "requiredMessage": "必选项",
+      "disabled": false,
+      "hidden": false,
+      "group": "",
+      "state": "default",
+      "clearable": false,
+      "style": {
+        "width": "100%",
+        "height": "35px",
+        "color": "",
+        "styleMode": "floating"
+      },
+      "events": [
+        {
+          "source": {
+            "id": "date-6438ea2baa935308ff0d9415",
+            "key": "value",
+            "value": [
+              "!EVENT!"
+            ],
+            "values": [
+              "!EVENT!"
+            ],
+            "props": [
+              {
+                "id": "id",
+                "name": "id"
+              },
+              {
+                "id": "order",
+                "name": "order"
+              },
+              {
+                "id": "type",
+                "name": "type"
+              },
+              {
+                "id": "editMode",
+                "name": "editMode"
+              },
+              {
+                "id": "label",
+                "name": "label"
+              },
+              {
+                "id": "placeholder",
+                "name": "placeholder"
+              },
+              {
+                "id": "key",
+                "name": "key"
+              },
+              {
+                "id": "defaultValue",
+                "name": "defaultValue"
+              },
+              {
+                "id": "required",
+                "name": "required"
+              },
+              {
+                "id": "requiredMessage",
+                "name": "requiredMessage"
+              },
+              {
+                "id": "disabled",
+                "name": "disabled"
+              },
+              {
+                "id": "hidden",
+                "name": "hidden"
+              },
+              {
+                "id": "group",
+                "name": "group"
+              },
+              {
+                "id": "state",
+                "name": "state"
+              },
+              {
+                "id": "clearable",
+                "name": "clearable"
+              },
+              {
+                "id": "style",
+                "name": "style",
+                "children": [
+                  {
+                    "id": "width",
+                    "name": "width"
+                  },
+                  {
+                    "id": "height",
+                    "name": "height"
+                  },
+                  {
+                    "id": "color",
+                    "name": "color"
+                  },
+                  {
+                    "id": "styleMode",
+                    "name": "styleMode"
+                  }
+                ]
+              },
+              {
+                "id": "events",
+                "name": "events"
+              },
+              {
+                "id": "reg",
+                "name": "reg"
+              },
+              {
+                "id": "regPattern",
+                "name": "regPattern"
+              },
+              {
+                "id": "regMessage",
+                "name": "regMessage"
+              },
+              {
+                "id": "format",
+                "name": "format"
+              },
+              {
+                "id": "mode",
+                "name": "mode"
+              },
+              {
+                "id": "alisa",
+                "name": "alisa"
+              },
+              {
+                "id": "value",
+                "name": "value"
+              }
+            ],
+            "_key": [
+              "value"
+            ]
+          },
+          "target": {
+            "id": "dateRange-6438ea2cdbdad1ceb30d9419",
+            "key": "disabled",
+            "value": [
+              "!EVENT!"
+            ],
+            "values": [
+              "!EVENT!"
+            ],
+            "props": [
+              {
+                "id": "id",
+                "name": "id"
+              },
+              {
+                "id": "order",
+                "name": "order"
+              },
+              {
+                "id": "type",
+                "name": "type"
+              },
+              {
+                "id": "editMode",
+                "name": "editMode"
+              },
+              {
+                "id": "label",
+                "name": "label"
+              },
+              {
+                "id": "placeholder",
+                "name": "placeholder"
+              },
+              {
+                "id": "key",
+                "name": "key"
+              },
+              {
+                "id": "defaultValue",
+                "name": "defaultValue"
+              },
+              {
+                "id": "required",
+                "name": "required"
+              },
+              {
+                "id": "requiredMessage",
+                "name": "requiredMessage"
+              },
+              {
+                "id": "disabled",
+                "name": "disabled"
+              },
+              {
+                "id": "hidden",
+                "name": "hidden"
+              },
+              {
+                "id": "group",
+                "name": "group"
+              },
+              {
+                "id": "state",
+                "name": "state"
+              },
+              {
+                "id": "clearable",
+                "name": "clearable"
+              },
+              {
+                "id": "style",
+                "name": "style",
+                "children": [
+                  {
+                    "id": "width",
+                    "name": "width"
+                  },
+                  {
+                    "id": "height",
+                    "name": "height"
+                  },
+                  {
+                    "id": "color",
+                    "name": "color"
+                  },
+                  {
+                    "id": "styleMode",
+                    "name": "styleMode"
+                  }
+                ]
+              },
+              {
+                "id": "events",
+                "name": "events"
+              },
+              {
+                "id": "reg",
+                "name": "reg"
+              },
+              {
+                "id": "regPattern",
+                "name": "regPattern"
+              },
+              {
+                "id": "regMessage",
+                "name": "regMessage"
+              },
+              {
+                "id": "format",
+                "name": "format"
+              },
+              {
+                "id": "mode",
+                "name": "mode"
+              },
+              {
+                "id": "height",
+                "name": "height"
+              },
+              {
+                "id": "alisa",
+                "name": "alisa"
+              },
+              {
+                "id": "value",
+                "name": "value"
+              },
+              {
+                "id": "align",
+                "name": "align"
+              }
+            ],
+            "_key": [
+              "disabled"
+            ]
+          },
+          "event": "onValueChanged"
+        }
+      ],
+      "reg": false,
+      "regPattern": "",
+      "regMessage": "",
+      "format": "yyyy/MM/dd HH:mm:ss",
+      "mode": "dateTime",
+      "alisa": "birth"
+    },
+    {
+      "id": "dateRange-6438ea2cdbdad1ceb30d9419",
+      "order": 10,
+      "type": "dateRange",
+      "editMode": true,
+      "label": "封禁时间",
+      "placeholder": "文本占位",
+      "key": "ban",
+      "defaultValue": "",
+      "required": false,
+      "requiredMessage": "必选项",
+      "disabled": false,
+      "hidden": false,
+      "group": "",
+      "state": "default",
+      "clearable": false,
+      "style": {
+        "width": "100%",
+        "height": "35px",
+        "color": "",
+        "styleMode": "floating"
+      },
+      "events": [],
+      "reg": false,
+      "regPattern": "",
+      "regMessage": "",
+      "format": "yyyy-MM-dd",
+      "mode": "date",
+      "height": "85px",
+      "alisa": "ban"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "defaultValue": "",
+  "alias": "",
+  "children": [
+    {
+      "defaultValue": "",
+      "alias": "",
+      "children": [
+      ],
+      "type": "text",
+      "id": "",
+      "key": "",
+      "value": "",
+      "label": "标题",
+      "placeholder": "",
+      "readonly": false,
+      "disabled": true,
+      "hidden": true,
+      "validateConfig": {
+        "required": false,
+        "requiredMessage": "",
+        "reg": false,
+        "regPattern": "",
+        "regMessage": ""
+      },
+      "styleConfig": {
+        "width": "100%",
+        "height": "20",
+        "align": ""
+      },
+      "extraConfig": {}
+    },
+    {
+      "defaultValue": "",
+      "alias": "",
+      "children": [
+      ],
+      "type": "text",
+      "id": "",
+      "key": "",
+      "value": "",
+      "label": "请假理由",
+      "placeholder": "",
+      "readonly": false,
+      "disabled": true,
+      "hidden": true,
+      "validateConfig": {
+        "required": false,
+        "requiredMessage": "",
+        "reg": false,
+        "regPattern": "",
+        "regMessage": ""
+      },
+      "styleConfig": {
+        "width": "100%",
+        "height": "20",
+        "align": ""
+      },
+      "extraConfig": {
+
+      }
+    }
+  ],
+  "type": "form",
+  "id": "1",
+  "key": "submitForm",
+  "value": {
+  },
+  "label": "请假表单",
+  "placeholder": "",
+  "readonly": false,
+  "disabled": true,
+  "hidden": true,
+  "validateConfig": {
+    "required": true,
+    "requiredMessage": "",
+    "reg": false,
+    "regPattern": "",
+    "regMessage": ""
+  },
+  "styleConfig": {
+    "width": "100%",
+    "height": "20",
+    "align": ""
+  },
+  "extraConfig": {}
+}
+
+
+
