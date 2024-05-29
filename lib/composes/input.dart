@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../base_compose.dart';
-import '../compose_state.dart';
+import '../../test/conmposes/base_compose.dart';
+import '../../test/conmposes/compose_state.dart';
 
 class Input extends BaseCompose {
   const Input({super.key,  required super.label, required super.required});

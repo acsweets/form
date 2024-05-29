@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../bean/compose.dart';
-import '../composes/compose_factory.dart';
+import 'conmposes/compose_factory.dart';
 
 class FromPage extends StatefulWidget {
   const FromPage({super.key});

@@ -77,10 +77,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:form/composes/compose_widegt.dart';
 
 import '../bean/base_composes_model.dart';
-import '../composes/compose_widget/form_compose.dart';
+import '../composes/form_compose.dart';
 import 'package:form/form.dart';
+
+import '../provider/form_data_provider.dart';
 
 mixin class Loader {
   FormDecoder? _decoder;
@@ -121,7 +124,7 @@ class FormDecoder {
   /// 表单组件怎么拿到和管理子组件的状态？
   /// 表单中怎么知道需要提交哪些字段，提交时遍历 表单组件的key 获得要提交的的参数信息
   /// 从树里找到这些信息
-
+  /// 获得表单的状态，组件改变（回调出去在表单里做处理）去调用表单里的方法
   Widget _convertToWidget(BaseComposesModel component) {
     switch (component.composeType) {
       case ComposeType.form:
@@ -130,13 +133,15 @@ class FormDecoder {
           children: component.children!.map((e) => _convertToWidget(e)).toList(),
         );
       case ComposeType.layout:
-        return Row(
+        return const Row(
           children: [],
         );
       case ComposeType.group:
         return Container();
       case ComposeType.text:
-        return Text("单行输入框");
+        return TextWidget(
+          composes:component ,
+        );
       case ComposeType.textArea:
         return Text("");
       default:
@@ -147,27 +152,4 @@ class FormDecoder {
   }
 }
 
-class FormDataProvider {
-  Future<Map?> onLoad(String path) {
-    if (path.startsWith('http') == true) {
-      return _http(path);
-    } else {
-      return _asset(path);
-    }
-  }
 
-  Future<Map?> _asset(String url) async {
-    var watch = Stopwatch()..start();
-    int? end, end2;
-    Map? map;
-    end = watch.elapsedMilliseconds;
-    String content = await rootBundle.loadString(url);
-    map = json.decode(content);
-    end2 = watch.elapsedMilliseconds;
-    return map;
-  }
-
-  Future<Map?> _http(String? url) async {
-    return Map();
-  }
-}

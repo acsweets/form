@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../bean/base_composes_model.dart';
+import '../bean/base_composes_model.dart';
 
 abstract class IComposes extends StatefulWidget {
   final BaseComposesModel baseComposes;
@@ -14,8 +14,9 @@ abstract class IComposes extends StatefulWidget {
 class _IComposesState extends State<IComposes> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+return Form(child: FormField(builder: (FormFieldState<dynamic> field) {
+  return Container();
+},));
   }
 }
 

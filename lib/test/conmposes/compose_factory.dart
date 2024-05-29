@@ -1,7 +1,7 @@
 // widget_factory.dart
 import 'package:flutter/material.dart';
+import 'package:form/composes/compose_widegt.dart';
 
-import 'compose_widget/compose_widegt.dart';
 
 typedef WidgetFactory = Widget Function(Map<String, dynamic>);
 
@@ -28,7 +28,7 @@ Widget _createWidgetFromJson(Map<String, dynamic>? jsonData) {
 }
 
 final Map<String, Widget> composes = {
-  'text': const TextWidget(),
+  // 'text': const TextWidget(),
   "textArea": const TextAreaWidget(), //描述输入
   "line": const LineWidget(), // 线
   "pager": const PagerWidget(), //
