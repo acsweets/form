@@ -3,52 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:form/form.dart';
 
-import '../bean/base_composes_model.dart';
 import '../utils/enum.dart';
-
-abstract class IComposes extends StatefulWidget {
-  final BaseComposesModel baseComposes;
-
-  const IComposes({super.key, required this.baseComposes});
-
-  @override
-  State<IComposes> createState() => _IComposesState();
-}
-
-class _IComposesState extends State<IComposes> {
-  @override
-  Widget build(BuildContext context) {
-   return Form(child: FormField(builder: (FormFieldState<dynamic> field) {
-      return Container();
-},));
-  }
-}
-
-class FormCompose extends StatefulWidget {
-  final BaseComposesModel baseComposes;
-  final List<Widget> children;
-
-  const FormCompose({super.key, required this.baseComposes, this.children = const []});
-
-  @override
-  State<FormCompose> createState() => _FormComposeState();
-}
-
-class _FormComposeState extends State<FormCompose> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.baseComposes.label),
-      ),
-      body: Column(
-        children: widget.children,
-      ),
-    );
-  }
-}
 
 class Form extends StatefulWidget {
   /// 为表单字段创建容器.
@@ -93,7 +49,6 @@ class Form extends StatefulWidget {
   /// 树中此小部件下方的小部件。这是包含此表单的小部件层次结构的根
   final Widget child;
 
-
   /// 当导航弹出会导致表单数据丢失
   final bool? canPop;
 
@@ -111,40 +66,52 @@ class Form extends StatefulWidget {
 }
 
 /// 与[Form]小部件关联的状态。[FormState]对象可用于[保存]、[重置]和[验证]作为关联[Form]子代的每个[FormField]。通常通过[Form.of]获得。
+/// [FormState]表单状态是被[_FormScope]所管理的
 class FormState extends State<Form> {
+  /// 每次更改表单字段时递增。这让我们知道何时重建表单
   int _generation = 0;
+
+  ///用户是否交互了
   bool _hasInteractedByUser = false;
+
+  ///Set 是一种无序且不允许重复元素的集合数据类型
+
   final Set<FormFieldState<dynamic>> _fields = <FormFieldState<dynamic>>{};
 
   // 当表单字段发生更改时调用。这将导致所有表单字段重新生成，如果表单字段具有相互依存关系，这将非常有用。
   void _fieldDidChange() {
     widget.onChanged?.call();
 
-    _hasInteractedByUser = _fields
-        .any((FormFieldState<dynamic> field) => field._hasInteractedByUser.value);
+    ///[any]检查集合中是否至少有一个元素满足给定的条件。如果有[就是用户已交互的]
+    ///是否存在子组件的[_hasInteractedByUser]为true 如果存在[FormState]的 _hasInteractedByUser为true
+    _hasInteractedByUser = _fields.any((FormFieldState<dynamic> field) => field._hasInteractedByUser.value);
     _forceRebuild();
   }
 
+  /// 强制重建并修改[_generation]值,[_generation]值的改变会导致 _FormScope 去重新通知刷新所有的表单字段
   void _forceRebuild() {
     setState(() {
       ++_generation;
     });
   }
 
+  ///登记，向[_fields]添加字段组价的状态
   void _register(FormFieldState<dynamic> field) {
     _fields.add(field);
   }
-
+  ///卸载，向[_fields]移除字段组价的状态，证明表单不在管理这个字段组件的状态，在组件销毁前调用这个移除
   void _unregister(FormFieldState<dynamic> field) {
     _fields.remove(field);
   }
 
   @override
   Widget build(BuildContext context) {
+    ///根据表单验证模式判断是否调用验证方法
     switch (widget.formValidationMode) {
       case FormValidationMode.auto:
         _validate();
       case FormValidationMode.onUserInteraction:
+      ///用户交互时调用验证方法
         if (_hasInteractedByUser) {
           _validate();
         }
@@ -197,7 +164,6 @@ class FormState extends State<Form> {
     return _validate();
   }
 
-
   /// 验证作为此[Form]的子代的每个[FormField]，并仅返回无效字段的[FormFieldState]的[Set]（如果有的话）。
   /// 此方法可用于突出显示有错误的字段。表单将重新生成以报告结果。另请参阅：[validate]，它还验证子代[FormField]，如果没有错误，则返回true。
   Set<FormFieldState<Object?>> validateGranularly() {
@@ -208,9 +174,13 @@ class FormState extends State<Form> {
     return invalidFields;
   }
 
+  ///表单验证方法
+  ///[invalidFields]无效字段
   bool _validate([Set<FormFieldState<Object?>>? invalidFields]) {
+
     bool hasError = false;
     String errorMessage = '';
+    ///主要通过循环调用字段的[validate]验证方法   判断是否有错误
     for (final FormFieldState<dynamic> field in _fields) {
       final bool isFieldValid = field.validate();
       hasError = !isFieldValid || hasError;
@@ -235,12 +205,15 @@ class FormState extends State<Form> {
   }
 }
 
+
+///
+/// [_FormScope] 持有表单中状态和表单 widget， 根据传入的[_generation]值去通知更新订阅的组件
 class _FormScope extends InheritedWidget {
   const _FormScope({
     required super.child,
     required FormState formState,
     required int generation,
-  }) : _formState = formState,
+  })  : _formState = formState,
         _generation = generation;
 
   final FormState _formState;
@@ -251,6 +224,7 @@ class _FormScope extends InheritedWidget {
   /// 与此小部件关联的[Form]。
   Form get form => _formState.widget;
 
+  ///[_generation]值改变就更新通知
   @override
   bool updateShouldNotify(_FormScope old) => _generation != old._generation;
 }
@@ -270,6 +244,7 @@ typedef FormFieldBuilder<T> = Widget Function(FormFieldState<T> field);
 /// 例如，如果希望一个表单字段依赖于另一个，请将[GlobalKey]与[FormField]一起使用。不需要[Form]祖先。
 /// [Form]允许一次保存、重置或验证多个字段。若要在不带[Form]的情况下使用，请将[GlobalKey]传递给构造函数，
 /// 然后使用[GlobalKey.currentState]保存或重置表单字段。另请参阅：[Form]，它是聚合表单字段的小部件。[TextField]，这是一个常用的用于输入文本的表单字段。
+/// [T]是提交表单字段的值
 class FormField<T> extends StatefulWidget {
   /// Creates a single form field.
   const FormField({
@@ -307,7 +282,8 @@ class FormField<T> extends StatefulWidget {
   /// 如果[autovalidateMode.onUserInteraction]，此FormField将仅在其内容更改后自动验证。如果[AutovalidateMode.always]，即使没有用户交互，
   /// 它也会自动验证。如果[AutovalidateMode.disabled]，自动验证将被禁用。默认为[AutovalidateMode.disabled]。｛@endtemplate
   final AutovalidateMode autovalidateMode;
-   ///restorationId 可以存储临时状态
+
+  ///restorationId 可以存储临时状态
   ///[RestorationMixin] 首先混入 RestorationMixin ，然后覆写 restorationId 和 restoreState 方法。 FormField拥有 恢复状态的特性。
   ///
   /// Restoration ID，用于保存和恢复表单字段的状态。将恢复ID设置为非null值将决定表单字段验证是否持续。
@@ -325,7 +301,9 @@ class FormFieldState<T> extends State<FormField<T>> with RestorationMixin {
 
   ///这两个数据可以被储存，被恢复
   /// 可以通过拓展 RestorableProperty<T> 来自定义 RestorableXXX 完成需求。
+  /// 错误文本
   final RestorableStringN _errorText = RestorableStringN(null);
+  /// 用户是否交互
   final RestorableBool _hasInteractedByUser = RestorableBool(false);
 
   /// 表单字段的当前值。
@@ -390,18 +368,18 @@ class FormFieldState<T> extends State<FormField<T>> with RestorationMixin {
   void setValue(T? value) {
     _value = value;
   }
-/// 因为混入[RestorationMixin] 覆写 restorationId 提供 id
+
+  /// 因为混入[RestorationMixin] 覆写 restorationId 提供 id
   @override
   String? get restorationId => widget.restorationId;
 
   ///因为混入[RestorationMixin] 覆写 对存储的值进行注册
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-// 注册 储存的 [变量] 值和 id
+// 注册储存的 [变量] 值和 id
     registerForRestoration(_errorText, 'error_text');
     registerForRestoration(_hasInteractedByUser, 'has_interacted_by_user');
   }
-
 
   //如果小部件被从树中永久移除，调用它
   @override
@@ -436,6 +414,7 @@ class FormFieldState<T> extends State<FormField<T>> with RestorationMixin {
           break;
       }
     }
+
     ///构建时将自己放进状态类里，让表单持有
     Form.maybeOf(context)?._register(this);
     return widget.builder(this);

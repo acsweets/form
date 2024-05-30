@@ -80,7 +80,6 @@ import 'package:flutter/services.dart';
 import 'package:form/composes/compose_widegt.dart';
 
 import '../bean/base_composes_model.dart';
-import '../composes/form_compose.dart';
 import 'package:form/form.dart';
 
 import '../provider/form_data_provider.dart';
@@ -122,12 +121,11 @@ class FormDecoder {
   }
 
   Widget _convertToWidget(BaseComposesModel component) {
+
     switch (component.composeType) {
       case ComposeType.form:
-        return FormCompose(
-          baseComposes: component,
-          children: component.children!.map((e) => _convertToWidget(e)).toList(),
-        );
+        return FormWidget(
+            children: component.children!.map((e) => _convertToWidget(e)).toList());
       case ComposeType.layout:
         return const Row(
           children: [],
@@ -135,8 +133,23 @@ class FormDecoder {
       case ComposeType.group:
         return Container();
       case ComposeType.text:
-        return TextWidget(
-          composes:component ,
+        return Container(
+          height: 200,
+          child: TextFormField(
+            initialValue: "777",
+            decoration: InputDecoration(
+              labelText: 'Email',
+            ),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Please enter your email';
+              }
+              return null;
+            },
+            onSaved: (value) {
+              print(value);
+            },
+          ),
         );
       case ComposeType.textArea:
         return Text("");
@@ -148,4 +161,49 @@ class FormDecoder {
   }
 }
 
+class FormWidget extends StatefulWidget {
+  final List<Widget> children;
 
+  const FormWidget({super.key, this.children = const []});
+
+  @override
+  State<FormWidget> createState() => FormWidgetState();
+}
+
+class FormWidgetState extends State<FormWidget> {
+  Map<String, dynamic> map = {};
+
+  void addParam(String key, dynamic value) {
+    map[key] = value;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
+    return Scaffold(
+      body: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ...widget.children,
+                ElevatedButton(
+                  onPressed: () {
+                    // if (formKey.currentState!.validate()) {
+                    // formKey.currentState!.save();
+                    // 在这里进行表单提交操作 ,通过Key拿到状态类
+                    formKey.currentState!.reset();
+
+                    ///管理子组件的重建
+                    ///提交时拿到组件的key value;
+                    print(map);
+                    // }
+                  },
+                  child: Text('Submit'),
+                ),
+              ],
+            ),
+          )),
+    );
+  }
+}
