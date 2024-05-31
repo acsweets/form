@@ -88,14 +88,3 @@ enum ComposeType {
 
 enum AlignType { left }
 
-///表单验证方式
-enum FormValidationMode {
-  /// 不启用验证
-  disabled,
-
-  /// 自动验证
-  auto,
-
-  /// 用户交互时验证
-  onUserInteraction,
-}
