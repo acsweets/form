@@ -1,38 +1,156 @@
 import 'package:flutter/material.dart';
-import 'package:form/bean/base_composes_model.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:form/base_form/form_render_component_scope.dart';
+import 'package:form/form.dart';
 
-class TextWidget extends StatefulWidget {
-  final BaseComposesModel composes;
+import '../base_form/form_component.dart';
+import '../entities/base_composes_model.dart';
 
-  const TextWidget({super.key, required this.composes});
+class FormTextComponent extends FormFieldComponent<String> {
+  final BaseComposesModel component;
+  final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
+
+  FormTextComponent({this.controller, this.onChanged, required this.component, super.key})
+      : super(
+            initialValue: component.defaultValue ?? "",
+            enabled: true,
+            // 为false 不会验证此字段。
+            formValidationMode: FormValidationMode.auto,
+            builder: (field) {
+              void onChangedHandler(String value) {
+                field.didChange(value);
+                onChanged?.call(value);
+              }
+
+              BuildContext context = field.context;
+              return Container(
+                  margin: EdgeInsets.only(top: 16.w),
+                  padding: EdgeInsets.symmetric(vertical: 12.w, horizontal: 16.w),
+                  color: Theme.of(context).cardColor,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(component.label, style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600)),
+                          Visibility(
+                              visible: component.validateConfig.required ?? false,
+                              child: Text(" *",
+                                  style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600, color: Colors.red))),
+                        ],
+                      ),
+                      TextField(
+                        readOnly: component.readOnly,
+                        decoration: InputDecoration(
+                            hintText: component.placeholder ?? '',
+                            hintStyle: TextStyle(color: Colors.grey, fontSize: 14.sp),
+                            border: InputBorder.none),
+                        maxLines: component.composeType == ComposeType.textArea ? 4 : 1,
+                        onChanged: onChangedHandler,
+                      ),
+                      // Text("${field.errorText??""}")
+                    ],
+                  ));
+            },
+            validator: (value) {
+              if (value == null) return component.validateConfig.regMessage;
+            });
 
   @override
-  State<TextWidget> createState() => _TextWidgetState();
+  FormFieldComponentState<String> createState() => _FormTextComponentState();
 }
 
-class _TextWidgetState extends State<TextWidget> {
+class _FormTextComponentState extends FormFieldComponentState<String> {
+  RestorableTextEditingController? _controller;
+
+  TextEditingController get _effectiveController => _formTextComponent.controller ?? _controller!.value;
+
+  FormTextComponent get _formTextComponent => super.widget as FormTextComponent;
+
   @override
-  Widget build(BuildContext context) {
-    Widget child = Container(
-        margin: const EdgeInsets.only(bottom: 10),
-        decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(15)),
-        padding: const EdgeInsets.all(15),
-        alignment: Alignment.center,
-        child: Row(children: [
-          Text(widget.composes.label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-          Visibility(
-              visible: widget.composes.validateConfig.required ?? false,
-              child: const Text("*", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.red))),
-          const SizedBox(width: 20),
-          Expanded(
-            child: TextField(
-              controller: TextEditingController(),
-              decoration: InputDecoration(
-                hintText: widget.composes.placeholder,
-              ),
-            ),
-          ),
-        ]));
-    return child;
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    super.restoreState(oldBucket, initialRestore);
+    if (_controller != null) {
+      _registerController();
+    }
+    setValue(_effectiveController.text);
+    FormRenderComponentScope.of(context).addParam(_formTextComponent.component.key, _effectiveController.text);
+  }
+
+  void _registerController() {
+    assert(_controller != null);
+    registerForRestoration(_controller!, 'controller');
+  }
+
+  void _createLocalController([TextEditingValue? value]) {
+    assert(_controller == null);
+    _controller = value == null ? RestorableTextEditingController() : RestorableTextEditingController.fromValue(value);
+    if (!restorePending) {
+      _registerController();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (_formTextComponent.controller == null) {
+      _createLocalController(widget.initialValue != null ? TextEditingValue(text: widget.initialValue!) : null);
+    } else {
+      _formTextComponent.controller!.addListener(_handleControllerChanged);
+    }
+  }
+
+  @override
+  void didUpdateWidget(FormTextComponent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_formTextComponent.controller != oldWidget.controller) {
+      oldWidget.controller?.removeListener(_handleControllerChanged);
+      _formTextComponent.controller?.addListener(_handleControllerChanged);
+
+      if (oldWidget.controller != null && _formTextComponent.controller == null) {
+        _createLocalController(oldWidget.controller!.value);
+      }
+
+      if (_formTextComponent.controller != null) {
+        setValue(_formTextComponent.controller!.text);
+        FormRenderComponentScope.of(context)
+            .addParam(_formTextComponent.component.key, _formTextComponent.controller!.text);
+
+        if (oldWidget.controller == null) {
+          unregisterFromRestoration(_controller!);
+          _controller!.dispose();
+          _controller = null;
+        }
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _formTextComponent.controller?.removeListener(_handleControllerChanged);
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChange(String? value) {
+    super.didChange(value);
+
+    if (_effectiveController.text != value) {
+      _effectiveController.text = value ?? '';
+    }
+  }
+
+  @override
+  void reset() {
+    _effectiveController.text = widget.initialValue ?? '';
+    super.reset();
+    _formTextComponent.onChanged?.call(_effectiveController.text);
+  }
+
+  void _handleControllerChanged() {
+    if (_effectiveController.text != value) {
+      didChange(_effectiveController.text);
+    }
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form/render/form_widget.dart';
+import 'package:form/utils/style.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,15 +12,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: FormWidget(
-        path: "assets/form1.json",
-      ),
+    return ScreenUtilInit(
+      designSize: const Size(414, 896),
+      builder: (_, widget) {
+        return MaterialApp(
+          title: 'Flutter Demo',
+          theme: themeData,
+          darkTheme: darkThemeData,
+          themeMode: ThemeMode.system,
+          home: FormWidget(
+            path: "assets/form1.json",
+          ),
+        );
+      },
     );
   }
 }

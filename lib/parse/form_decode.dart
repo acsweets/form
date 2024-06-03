@@ -73,39 +73,16 @@
 //   }
 // }
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:form/composes/compose_widegt.dart';
-import 'package:form/composes/form_widget_scope.dart';
-
 import '../base_form/form_component.dart';
-import '../bean/base_composes_model.dart';
+import '../base_form/form_render_component.dart';
+import '../base_form/form_render_component_logic.dart';
+import '../base_form/form_render_component_scope.dart';
 import 'package:form/form.dart';
 
-import '../provider/form_data_provider.dart';
-
-mixin class Loader {
-  FormDecoder? _decoder;
-  String? bundleType;
-
-  Future<Widget?> parse(BuildContext context, {required String url}) async {
-    Widget widget;
-    try {
-      Map? map = await FormDataProvider().onLoad(url);
-      _decoder ??= FormDecoder();
-      widget = _decoder!.toWidget(map);
-      print(widget);
-      return widget;
-    } catch (e) {
-      widget = const WarningWidget(
-        type: ComposeType.form,
-      );
-    }
-    return widget;
-  }
-}
+import '../composes/group_component.dart';
+import '../composes/text.dart';
+import '../entities/base_composes_model.dart';
 
 class FormDecoder {
   Widget toWidget(Map? map) {
@@ -125,54 +102,30 @@ class FormDecoder {
   Widget _convertToWidget(BaseComposesModel component) {
     switch (component.composeType) {
       case ComposeType.form:
-        return FormRenderComponent(children: component.children!.map((e) => _convertToWidget(e)).toList());
+        return FormRenderComponentScope(
+            notifier: FormRenderComponentLogic(),
+            child: FormRenderComponent(
+              component: component,
+              children: component.children!.map((e) => _convertToWidget(e)).toList(),
+            ));
       case ComposeType.layout:
         return const Row(
           children: [],
         );
       case ComposeType.group:
-        return Container();
+        return GroupComponent(
+          label: component.label,
+          children: component.children!.map((e) => _convertToWidget(e)).toList(),
+        );
       case ComposeType.text:
+      case ComposeType.textArea:
         return FormTextComponent(
           component: component,
         );
-      case ComposeType.textArea:
-        return Text("");
       default:
         return WarningWidget(
           type: component.composeType,
         );
     }
-  }
-}
-
-class FormTextComponent extends FormFieldComponent {
-  final BaseComposesModel component;
-
-  FormTextComponent({required this.component, super.key,})
-      : super(
-            initialValue: component.defaultValue,
-            builder: (e) {
-              return Container(
-                  height: 200,
-                  child: TextField(
-                    readOnly: component.readOnly,
-                  ));
-            });
-
-  @override
-  FormFieldComponentState<String> createState() => _FormTextComponentState();
-}
-
-class _FormTextComponentState extends FormFieldComponentState<String> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChange(String? value) {
-    // TODO: implement didChange
-    super.didChange(value);
   }
 }

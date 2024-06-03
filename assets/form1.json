@@ -11,6 +11,34 @@
       "id": "111",
       "key": "name",
       "value": "",
+      "label": "请假理由",
+      "placeholder": "请输入",
+      "readonly": false,
+      "disabled": false,
+      "hidden": false,
+      "validateConfig": {
+        "required": true,
+        "requiredMessage": "请填写你的请假理由",
+        "reg": false,
+        "regPattern": "",
+        "regMessage": ""
+      },
+      "styleConfig": {
+        "width": "100%",
+        "height": "20",
+        "align": ""
+      },
+      "extraConfig": {}
+    },
+    {
+      "defaultValue": "",
+      "alias": "",
+      "children": [
+      ],
+      "type": "text",
+      "id": "222",
+      "key": "name",
+      "value": "",
       "label": "标题",
       "placeholder": "请输入",
       "readonly": false,
@@ -31,15 +59,71 @@
       "extraConfig": {}
     },
     {
-      "defaultValue": "",
+      "defaultValue": "地址信息",
       "alias": "",
       "children": [
+        {
+          "defaultValue": "",
+          "alias": "",
+          "children": [
+          ],
+          "type": "text",
+          "id": "333",
+          "key": "residence",
+          "value": "",
+          "label": "户籍住址",
+          "placeholder": "请输入",
+          "readonly": false,
+          "disabled": false,
+          "hidden": false,
+          "validateConfig": {
+            "required": true,
+            "requiredMessage": "请填写你的住址",
+            "reg": false,
+            "regPattern": "",
+            "regMessage": ""
+          },
+          "styleConfig": {
+            "width": "100%",
+            "height": "20",
+            "align": ""
+          },
+          "extraConfig": {}
+        },
+        {
+          "defaultValue": "",
+          "alias": "",
+          "children": [
+          ],
+          "type": "text",
+          "id": "444",
+          "key": "name",
+          "value": "",
+          "label": "现住址",
+          "placeholder": "请输入",
+          "readonly": false,
+          "disabled": false,
+          "hidden": false,
+          "validateConfig": {
+            "required": true,
+            "requiredMessage": "请填写你的现住址",
+            "reg": false,
+            "regPattern": "",
+            "regMessage": ""
+          },
+          "styleConfig": {
+            "width": "100%",
+            "height": "20",
+            "align": ""
+          },
+          "extraConfig": {}
+        }
       ],
-      "type": "text",
+      "type": "group",
       "id": "",
       "key": "",
       "value": "",
-      "label": "请假理由",
+      "label": "地址信息",
       "placeholder": "",
       "readonly": false,
       "disabled": true,
@@ -59,6 +143,34 @@
       "extraConfig": {
 
       }
+    },
+    {
+      "defaultValue": "",
+      "alias": "",
+      "children": [
+      ],
+      "type": "textArea",
+      "id": "666",
+      "key": "feel",
+      "value": "",
+      "label": "你的感受",
+      "placeholder": "请输入",
+      "readonly": false,
+      "disabled": false,
+      "hidden": false,
+      "validateConfig": {
+        "required": false,
+        "requiredMessage": "请填写你的感受",
+        "reg": false,
+        "regPattern": "",
+        "regMessage": ""
+      },
+      "styleConfig": {
+        "width": "100%",
+        "height": "20",
+        "align": ""
+      },
+      "extraConfig": {}
     }
   ],
   "type": "form",
@@ -67,7 +179,7 @@
   "value": {
   },
   "label": "请假表单",
-  "placeholder": "",
+  "placeholder": "员工请假时填的申请表",
   "readonly": false,
   "disabled": true,
   "hidden": true,

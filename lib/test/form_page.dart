@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../bean/compose.dart';
+import '../entities/compose.dart';
 import 'conmposes/compose_factory.dart';
 
 class FromPage extends StatefulWidget {

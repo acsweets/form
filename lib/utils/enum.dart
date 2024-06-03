@@ -88,3 +88,14 @@ enum ComposeType {
 
 enum AlignType { left }
 
+//数据源的类型
+enum DataSourceType {
+  ///加载远程数据源 请求加载即可
+  load,
+  /// 关联数据源,指a数据源的选项更改 会影响b的数据源更改 或者说 数据源是由另一个选项控制的
+  lookup,
+  /// 常量 不变的值
+  normal,
+  ///是指不在数据源内 但是在各种上下文的一些变量
+  reference,
+}
