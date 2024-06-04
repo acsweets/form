@@ -6,6 +6,5 @@ class FormRenderComponentLogic extends ChangeNotifier {
 
   void addParam(String key, dynamic value) {
     map[key] = value;
-    notifyListeners();
   }
 }

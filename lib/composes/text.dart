@@ -18,6 +18,7 @@ class FormTextComponent extends FormFieldComponent<String> {
             // 为false 不会验证此字段。
             formValidationMode: FormValidationMode.auto,
             builder: (field) {
+      ///在字段改变时调用didChange来告知字段值发生改变
               void onChangedHandler(String value) {
                 field.didChange(value);
                 onChanged?.call(value);
@@ -48,12 +49,12 @@ class FormTextComponent extends FormFieldComponent<String> {
                         maxLines: component.composeType == ComposeType.textArea ? 4 : 1,
                         onChanged: onChangedHandler,
                       ),
-                      // Text("${field.errorText??""}")
+                      // Text(field.errorText??"",style: TextStyle(fontSize: 12.sp,color: Colors.red),)
                     ],
                   ));
             },
             validator: (value) {
-              if (value == null) return component.validateConfig.regMessage;
+              if (value!.isEmpty) return component.validateConfig.requiredMessage;
             });
 
   @override
@@ -74,7 +75,6 @@ class _FormTextComponentState extends FormFieldComponentState<String> {
       _registerController();
     }
     setValue(_effectiveController.text);
-    FormRenderComponentScope.of(context).addParam(_formTextComponent.component.key, _effectiveController.text);
   }
 
   void _registerController() {
@@ -113,9 +113,6 @@ class _FormTextComponentState extends FormFieldComponentState<String> {
 
       if (_formTextComponent.controller != null) {
         setValue(_formTextComponent.controller!.text);
-        FormRenderComponentScope.of(context)
-            .addParam(_formTextComponent.component.key, _formTextComponent.controller!.text);
-
         if (oldWidget.controller == null) {
           unregisterFromRestoration(_controller!);
           _controller!.dispose();
@@ -135,7 +132,10 @@ class _FormTextComponentState extends FormFieldComponentState<String> {
   @override
   void didChange(String? value) {
     super.didChange(value);
-
+    // validate();
+    print("======didChange=================$errorText");
+    FormRenderComponentScope.of(context)
+        .addParam(_formTextComponent.component.key, value);
     if (_effectiveController.text != value) {
       _effectiveController.text = value ?? '';
     }

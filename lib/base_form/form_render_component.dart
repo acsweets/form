@@ -26,7 +26,7 @@ class FormRenderComponentState extends State<FormRenderComponent> {
       appBar: _title(),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: FormComponent(
-          formValidationMode: FormValidationMode.auto,
+          formValidationMode: FormValidationMode.disabled,
           child: SingleChildScrollView(
             child: Column(
               children: [

@@ -8,7 +8,6 @@ import 'form_decode.dart';
 
 mixin class Loader {
   FormDecoder? _decoder;
-  String? bundleType;
 
   Future<Widget?> parse(BuildContext context, {required String url}) async {
     Widget widget;
@@ -24,5 +23,6 @@ mixin class Loader {
       );
     }
     return widget;
+
   }
 }
