@@ -4,7 +4,7 @@ import 'package:form/form.dart';
 
 
 
-class BaseComposesModel {
+class ComponentModel {
   ///默认值
   dynamic defaultValue;
 
@@ -12,7 +12,7 @@ class BaseComposesModel {
   String? alias;
 
   ///组件子节点
-  List<BaseComposesModel>? children;
+  List<ComponentModel>? children;
 
   ///组件类型
   ComposeType composeType;
@@ -44,7 +44,7 @@ class BaseComposesModel {
   ComposeValueRule validateConfig;
   dynamic extraConfig;
 
-  BaseComposesModel(
+  ComponentModel(
       {this.defaultValue,
       this.alias,
       this.children,
@@ -61,12 +61,12 @@ class BaseComposesModel {
       required this.validateConfig,
       this.extraConfig});
 
-  factory BaseComposesModel.formMap(Map map) {
-    return BaseComposesModel(
+  factory ComponentModel.formMap(Map map) {
+    return ComponentModel(
       defaultValue: map["defaultValue"],
       alias: map["alias"],
       children:
-          map["children"] == null ? [] : (map["children"] as List).map((e) => BaseComposesModel.formMap(e)).toList(),
+          map["children"] == null ? [] : (map["children"] as List).map((e) => ComponentModel.formMap(e)).toList(),
       composeType: EnumUtils.stringToEnum(ComposeType.values, map["type"]) ?? ComposeType.unadapted,
       id: map["id"],
       key: map["key"],

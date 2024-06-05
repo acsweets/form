@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 
 class FormDataProvider {
+  const FormDataProvider();
 
   Future<Map?> onLoad(String path) {
     if (path.startsWith('http') == true) {

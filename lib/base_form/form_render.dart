@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:form/entities/base_composes_model.dart';
-
+import '../entities/conponent_model.dart';
 import 'form_component.dart';
 
-class FormRenderComponent extends StatefulWidget {
+class FormRender extends StatefulWidget {
   final List<Widget> children;
-  final BaseComposesModel component;
+  final ComponentModel component;
 
-  const FormRenderComponent({super.key, this.children = const [], required this.component});
+  const FormRender({super.key, this.children = const [], required this.component});
 
   @override
-  State<FormRenderComponent> createState() => FormRenderComponentState();
+  State<FormRender> createState() => FormRenderState();
 }
 
-class FormRenderComponentState extends State<FormRenderComponent> {
+class FormRenderState extends State<FormRender> {
   @override
   void initState() {
     super.initState();

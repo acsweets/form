@@ -74,22 +74,27 @@
 // }
 
 import 'package:flutter/material.dart';
-import '../base_form/form_component.dart';
-import '../base_form/form_render_component.dart';
-import '../base_form/form_render_component_logic.dart';
-import '../base_form/form_render_component_scope.dart';
+import 'package:form/base_form/form_render.dart';
 import 'package:form/form.dart';
-
+import '../base_form/form_render_logic.dart';
+import '../base_form/form_render_scope.dart';
 import '../composes/group_component.dart';
 import '../composes/text.dart';
-import '../entities/base_composes_model.dart';
+import '../entities/conponent_model.dart';
 
 class FormDecoder {
+  static final FormDecoder _instance = FormDecoder._internal();
+
+  factory FormDecoder() {
+    return _instance;
+  }
+  FormDecoder._internal();
+
   Widget toWidget(Map? map) {
     Widget widget;
-    late BaseComposesModel baseComposesModel;
+    late ComponentModel baseComposesModel;
     if (map != null) {
-      baseComposesModel = BaseComposesModel.formMap(map);
+      baseComposesModel = ComponentModel.formMap(map);
       widget = _convertToWidget(baseComposesModel);
     } else {
       widget = const WarningWidget(
@@ -99,12 +104,12 @@ class FormDecoder {
     return widget;
   }
 
-  Widget _convertToWidget(BaseComposesModel component) {
+  Widget _convertToWidget(ComponentModel component) {
     switch (component.composeType) {
       case ComposeType.form:
-        return FormRenderComponentScope(
-            notifier: FormRenderComponentLogic(),
-            child: FormRenderComponent(
+        return FormRenderScope(
+            notifier: FormRenderLogic(),
+            child: FormRender(
               component: component,
               children: component.children!.map((e) => _convertToWidget(e)).toList(),
             ));

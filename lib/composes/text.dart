@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:form/base_form/form_render_component_scope.dart';
 import 'package:form/form.dart';
 
 import '../base_form/form_component.dart';
-import '../entities/base_composes_model.dart';
+import '../base_form/form_render_scope.dart';
+import '../entities/conponent_model.dart';
 
 class FormTextComponent extends FormFieldComponent<String> {
-  final BaseComposesModel component;
+  final ComponentModel component;
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
 
@@ -134,7 +134,7 @@ class _FormTextComponentState extends FormFieldComponentState<String> {
     super.didChange(value);
     // validate();
     print("======didChange=================$errorText");
-    FormRenderComponentScope.of(context)
+    FormRenderScope.of(context)
         .addParam(_formTextComponent.component.key, value);
     if (_effectiveController.text != value) {
       _effectiveController.text = value ?? '';

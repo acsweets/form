@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-class FormRenderComponentLogic extends ChangeNotifier {
+class FormRenderLogic extends ChangeNotifier {
   Map<String, dynamic> map = {};
 
   void addParam(String key, dynamic value) {

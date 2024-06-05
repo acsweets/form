@@ -12,7 +12,7 @@ mixin class Loader {
   Future<Widget?> parse(BuildContext context, {required String url}) async {
     Widget widget;
     try {
-      Map? map = await FormDataProvider().onLoad(url);
+      Map? map = await const FormDataProvider().onLoad(url);
       _decoder ??= FormDecoder();
       widget = _decoder!.toWidget(map);
       print(widget);
