@@ -147,10 +147,12 @@ class TopBottomBorder extends InputBorder {
       ..addRRect(borderRadius.resolve(textDirection).toRRect(rect).deflate(borderSide.width));
   }
 
+  ///getOuterPath 返回一个Path对象，也就是形状的裁剪
   @override
   Path getOuterPath(Rect rect, { TextDirection? textDirection }) {
-    return Path()
-      ..addRRect(borderRadius.resolve(textDirection).toRRect(rect));
+    var path = Path();
+    path.addRRect(RRect.fromRectAndRadius(rect, Radius.circular(10)));
+    return path;
   }
 
   @override
@@ -251,6 +253,20 @@ class TopBottomBorder extends InputBorder {
   /// 使用[borderRadius]在[rect]周围绘制一个圆角矩形。[borderSide]定义线条的颜色和权重。如果[gapExtent]为非空，圆角矩形的顶面可能会被一个间隙打断。在这种情况下，间隙从“gapStart-gapPadding”开始
   /// （假设[textDirection]为[textDirection.ltr]）。
   /// 间隙的宽度为“（gapPadding+gapExtent+gapPadding）gapPercentage”。
+  /// rect 表明可以直接拿到组件的区域，然后....为所欲为吧
+  ///  @override
+  //   void paint(Canvas canvas, Rect rect, {TextDirection textDirection}) {
+  //     var paint = Paint()
+  //       ..color = Colors.white
+  //       ..strokeWidth = 2.0
+  //       ..style = PaintingStyle.stroke
+  //       ..strokeJoin = StrokeJoin.round;
+  //     var w = rect.width;
+  //     var h = rect.height;
+  //     canvas.drawCircle(Offset(0.3*h,0.23*h), 0.12*h, paint);
+  //     canvas.drawCircle(Offset(0.3*h,0.23*h), 0.06*h, paint..style=PaintingStyle.fill..color=Colors.black);
+  //   }
+
   @override
   void paint(
       Canvas canvas,
