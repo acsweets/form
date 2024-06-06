@@ -16,9 +16,9 @@ class FormTextComponent extends FormFieldComponent<String> {
             initialValue: component.defaultValue ?? "",
             enabled: true,
             // 为false 不会验证此字段。
-            formValidationMode: FormValidationMode.auto,
+            formValidationMode: FormValidationMode.onUserInteraction,
             builder: (field) {
-      ///在字段改变时调用didChange来告知字段值发生改变
+              ///在字段改变时调用didChange来告知字段值发生改变
               void onChangedHandler(String value) {
                 field.didChange(value);
                 onChanged?.call(value);
@@ -43,9 +43,13 @@ class FormTextComponent extends FormFieldComponent<String> {
                       TextField(
                         readOnly: component.readOnly,
                         decoration: InputDecoration(
-                            hintText: component.placeholder ?? '',
-                            hintStyle: TextStyle(color: Colors.grey, fontSize: 14.sp),
-                            border: InputBorder.none),
+                          focusedErrorBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1)),
+                          errorBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1)),
+                          hintText: component.placeholder ?? '',
+                          hintStyle: TextStyle(color: Colors.grey, fontSize: 14.sp),
+                          border: InputBorder.none,
+                          errorText: field.errorText,
+                        ),
                         maxLines: component.composeType == ComposeType.textArea ? 4 : 1,
                         onChanged: onChangedHandler,
                       ),
@@ -134,8 +138,7 @@ class _FormTextComponentState extends FormFieldComponentState<String> {
     super.didChange(value);
     // validate();
     print("======didChange=================$errorText");
-    FormRenderScope.of(context)
-        .addParam(_formTextComponent.component.key, value);
+    FormRenderScope.of(context).addParam(_formTextComponent.component.key, value);
     if (_effectiveController.text != value) {
       _effectiveController.text = value ?? '';
     }
